@@ -25,6 +25,13 @@
             <li class="list-group-item"><strong>Slug: </strong>{{$project->slug}}</li>
             <li class="list-group-item"><strong>Repo: </strong><a href="{{$project->link}}">Visualizza sul GitHub-></a></li>
             <li class="list-group-item"><strong>Type: </strong>{{$project->type ? $project->type->label : 'There isn\'t type!' }}</li>
+            <li class="list-group-item"><strong>Tech\s: </strong>
+                @forelse ($project->technologies as $technology)
+                {{$technology->tech_name}} @unless($loop->last), @else . @endunless
+                @empty
+                    No technology
+                @endforelse    
+            </li>
             <li class="list-group-item"><strong>Create at: </strong>{{$project->created_at}}</li>
             <li class="list-group-item"><strong>Update at: </strong>{{$project->updated_at}}</li>
             <li class="list-group-item"><strong>Description: </strong>{{$project->description}}</li>

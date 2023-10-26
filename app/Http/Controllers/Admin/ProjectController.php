@@ -8,8 +8,11 @@ use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Arr;
+
 use App\Models\Project;
 use App\Models\Type;
+use App\Models\Technology;
 
 class ProjectController extends Controller
 {
@@ -33,8 +36,12 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $technologies = Technology::orderBy('tech_name')->get();
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        return view('admin.projects.create', compact('types', 'technologies'));
+
+        /* tech create */
+
     }
 
     /**
@@ -60,6 +67,9 @@ class ProjectController extends Controller
         /* save inside database */
         $project->save();
 
+        /* try add technology relationship to store */
+        if (Arr::exists($data, "technologies"))
+            $project->technologies()->attach($data["technologies"]);
         /* 
         ! REMEMBER TO CODE IN MODEL FOR FILLABLE CONTENTS  
         */
@@ -87,8 +97,12 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        /* add tech method to edit  */
+        $technologies = Technology::orderBy('tech_name')->get();
+        /* from "pivot" seeder -> */
+        $project_technologies = $project->technologies->pluck('id')->toArray();
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        return view('admin.projects.edit', compact('project', 'types', 'technologies', 'project_technologies'));
     }
 
     /**
@@ -110,6 +124,11 @@ class ProjectController extends Controller
 
         $project->update($data);
 
+        if (Arr::exists($data, "technologies"))
+            $project->technologies()->sync($data["technologies"]);
+        else
+            $project->technologies()->detach();
+
         return redirect()->route('admin.projects.show', $project)
             ->with('message_type', 'success')
             ->with('message', 'Project edited successfully !');
@@ -124,7 +143,9 @@ class ProjectController extends Controller
     /* destroy  */
     public function destroy(Project $project)
     {
+        $project->technologies()->detach();
         $project->delete();
+
         return redirect()->route('admin.projects.index')
             ->with('message_type', 'danger')
             ->with('message', 'Project deleted !');
@@ -139,6 +160,7 @@ class ProjectController extends Controller
                 'title' => 'required|string|max:50',
                 'slug' => 'required|string',
                 'type_id' => 'required',
+                'technologies' => 'nullable|exists:technologies,id',
                 'link' => 'required|string',
                 'date' => 'required|string|max:50',
                 'description' => 'required',
@@ -156,6 +178,8 @@ class ProjectController extends Controller
                 'slug.string' => 'slug need to be a string!',
 
                 'type_id.required' => 'Type is not valid, select a type!',
+
+                'technologies.exists' => 'Thecnologies have problem!',
 
                 'link.required' => 'The link is binding!',
                 'link.string' => 'link need to be a string!',

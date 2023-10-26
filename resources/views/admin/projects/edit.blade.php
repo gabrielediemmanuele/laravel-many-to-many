@@ -91,6 +91,32 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
              </div>
            @enderror
 
+           {{--* CHECKBOXS per selezionare la\le Technology --}}
+           <label class="form-label">Technologies</label>
+           <div class="form-check bg-light text-primary p-3">
+                <div class="row">
+                    @foreach ($technologies as $technology)
+                    <div class="col-3 mb-3">
+                        <input type="checkbox" 
+                            id="technology-{{ $technology->id }}"
+                            value="{{ $technology->id }}"
+                            name="technologies[]"
+                            class="form-check-control"
+                            @if (in_array($technology->id, old('technologies', $project_technologies))) checked @endif
+                        >
+                        <label for="technology-{{ $technology->id }}">
+                            {{ $technology->tech_name }}
+                        </label>
+                    </div>
+                    @endforeach
+                </div>
+           </div>
+           @error('technologies')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+           @enderror
+           
             <div class="col-8">
                 <label for="link" class="form-label">Link</label>
                 <input type="text" id="link" name="link" class="form-control @error('link') is-invalid @enderror" value="{{ old('link') ?? $project->link }}">
