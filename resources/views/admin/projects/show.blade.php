@@ -27,7 +27,7 @@
             <li class="list-group-item"><strong>Type: </strong>{{$project->type ? $project->type->label : 'There isn\'t type!' }}</li>
             <li class="list-group-item"><strong>Tech\s: </strong>
                 @forelse ($project->technologies as $technology)
-                {{$technology->tech_name}} @unless($loop->last) , @lese . @endunless
+                {{$technology->tech_name}} @unless($loop->last), @else . @endunless
                 @empty
                     No technology
                 @endforelse    
