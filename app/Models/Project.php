@@ -16,7 +16,7 @@ class Project extends Model
         'date',
         'link',
         'type_id',
-        'tec_name',
+        'tech_name',
         'description'
     ];
 
