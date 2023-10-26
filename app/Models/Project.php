@@ -16,14 +16,25 @@ class Project extends Model
         'date',
         'link',
         'type_id',
+        'tec_name',
         'description'
     ];
 
     /* 
-    ! connection to category model  
+    ! rapporto tra project e type uno a molti.  
     */
     public function type()
     {
         return $this->belongsTo(Type::class);
     }
+
+    /* 
+    ! rapporto tra projects e technologies molti a molti.  
+    */
+    public function technologies()
+    {
+        /* il belongsToMany definisce una relazione molti a molti  */
+        return $this->belongsToMany(Technology::class);
+    }
+
 }
