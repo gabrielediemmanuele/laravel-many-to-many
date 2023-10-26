@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Project;
 use App\Models\Type;
+use App\Models\Technology;
 
 class ProjectController extends Controller
 {
@@ -33,8 +34,12 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $technologies = Technology::orderBy('tech_name')->get();
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        return view('admin.projects.create', compact('types', 'technologies'));
+
+        /* tech create */
+
     }
 
     /**
