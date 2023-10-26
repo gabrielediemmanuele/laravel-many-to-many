@@ -124,6 +124,11 @@ class ProjectController extends Controller
 
         $project->update($data);
 
+        if (Arr::exists($data, "technologies"))
+            $project->technologies()->sync($data["technologies"]);
+        else
+            $project->technologies()->detach();
+
         return redirect()->route('admin.projects.show', $project)
             ->with('message_type', 'success')
             ->with('message', 'Project edited successfully !');
