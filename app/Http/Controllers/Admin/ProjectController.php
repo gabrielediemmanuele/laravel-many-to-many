@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Arr;
+
 use App\Models\Project;
 use App\Models\Type;
 use App\Models\Technology;
@@ -65,6 +67,9 @@ class ProjectController extends Controller
         /* save inside database */
         $project->save();
 
+        /* try add technology relationship to store */
+        if (Arr::exists($data, "technologies"))
+            $project->technologies()->attach($data["technologies"]);
         /* 
         ! REMEMBER TO CODE IN MODEL FOR FILLABLE CONTENTS  
         */
@@ -144,6 +149,7 @@ class ProjectController extends Controller
                 'title' => 'required|string|max:50',
                 'slug' => 'required|string',
                 'type_id' => 'required',
+                'technologies' => 'nullable|exists:technologies,id',
                 'link' => 'required|string',
                 'date' => 'required|string|max:50',
                 'description' => 'required',
@@ -161,6 +167,8 @@ class ProjectController extends Controller
                 'slug.string' => 'slug need to be a string!',
 
                 'type_id.required' => 'Type is not valid, select a type!',
+
+                'technologies.exists' => 'Thecnologies have problem!',
 
                 'link.required' => 'The link is binding!',
                 'link.string' => 'link need to be a string!',
