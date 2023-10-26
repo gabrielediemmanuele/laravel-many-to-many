@@ -97,8 +97,12 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        /* add tech method to edit  */
+        $technologies = Technology::orderBy('tech_name')->get();
+        /* from "pivot" seeder -> */
+        $project_technologies = $project->technologies->pluck('id')->toArray();
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        return view('admin.projects.edit', compact('project', 'types', 'technologies', 'project_technologies'));
     }
 
     /**
