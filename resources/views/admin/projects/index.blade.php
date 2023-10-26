@@ -28,6 +28,7 @@
         <th scope="col">Date</th>
         <th scope="col">Link</th>
         <th scope="col">Type</th>
+        <th scope="col">Tech\s</th>
         <th scope="col">Description</th>
         <th scope="col">Create At</th>
         <th scope="col">Update At</th>
@@ -46,6 +47,13 @@
         <td>{{$project->date}}</td>
         <td><a href="{{$project->link}}">Vai alla repo</a></td>
         <td>{{$project->type?->label}}</td>
+        <td>
+          @forelse($project->technologies as $technology)
+          {{ $technology->tech_name }} @unless($loop->last), @else . @endunless
+          @empty
+          -- 
+          @endforelse
+        </td>
         <td><a href="{{ route('admin.projects.show', $project)}}">Visualizza Descrizione</a></td>
         <td>{{$project->created_at}}</td>
         <td>{{$project->updated_at}}</td>
@@ -88,13 +96,13 @@
           </div>
         </td>
       </tr>
-              @empty 
-                  <tr>
-                    <td> <i> Non ci sono progetti.</i></td>
-                  </tr>
-              @endforelse
-            </tbody>
-          </table>
-        {{ $projects->links('pagination::bootstrap-5')}}
-    </div>
+      @empty 
+      <tr>
+        <td> <i> Non ci sono progetti.</i></td>
+      </tr>
+    @endforelse
+    </tbody>
+  </table>
+  {{ $projects->links('pagination::bootstrap-5')}}
+</div>
 @endsection
