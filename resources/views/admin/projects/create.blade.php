@@ -148,17 +148,6 @@
 @endsection
 
 @section('scripts')
-<script>
-    const thumbPrev = document.getElementById('thumb-preview');
-    const thumbInput = document.getElementById('thumb');
-
-    thumbInput.addEventListener('change', function(){
-        thumbPrev.src = this.value;
-    })
-</script>
-@endsection
-
-@section('scripts')
 <script type='text/javascript'>
     /*  prendo l'id della stringa che contiene l'immagine*/
     const inputFileElement = document.getElementById('cover_image');
@@ -171,6 +160,7 @@
     /* al cambio di immagine costruisco anche l'url per la preview  */
     inputFileElement.addEventListener('change', function() {
         const [file] = this.files;
+        /*generiamo un url / blob e lo inseriamo nel src per far vedere che la prev si aggiorna*/
         coverImagePreview.src = URL.createObjectURL(file);
     })
 </script>
