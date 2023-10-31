@@ -53,7 +53,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                 </div>
                 @enderror
             </div>
-            
+
             {{--* per caricare l'immagine --}} 
             <div class="col-12 mb-4">
                 <div class="row">
@@ -167,12 +167,20 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endsection
 
 @section('scripts')
-<script>
-    const thumbPrev = document.getElementById('thumb-preview');
-    const thumbInput = document.getElementById('thumb');
-
-    thumbInput.addEventListener('change', function(){
-        thumbPrev.src = this.value;
+<script type='text/javascript'>
+    /*  prendo l'id della stringa che contiene l'immagine*/
+    const inputFileElement = document.getElementById('cover_image');
+    /* mi aggancio all'id che conterrà la preview */
+    const coverImagePreview = document.getElementById('cover_image_preview');
+    /* se la preview non ha src (vuoto) lo sostituisco con un placeholder */
+    if (!coverImagePreview.getAttribute('src') || coverImagePreview.getAttribute('src') == "http://127.0.0.1:8000/storage") {
+        coverImagePreview.src = "https://placehold.co/400";
+    }
+    /* al cambio di immagine costruisco anche l'url per la preview  */
+    inputFileElement.addEventListener('change', function() {
+        const [file] = this.files;
+        /*generiamo un url / blob e lo inseriamo nel src per far vedere che la prev si aggiorna*/
+        coverImagePreview.src = URL.createObjectURL(file);
     })
 </script>
 @endsection
