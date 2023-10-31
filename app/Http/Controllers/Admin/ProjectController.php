@@ -10,9 +10,13 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Arr;
 
+use Illuminate\Support\Facades\Storage;
+
 use App\Models\Project;
 use App\Models\Type;
 use App\Models\Technology;
+
+
 
 class ProjectController extends Controller
 {
@@ -63,6 +67,11 @@ class ProjectController extends Controller
 
         /* fill with form information */
         $project->fill($data);
+
+        if ($request->hasFile('cover_image')) {
+            $cover_image_path = Storage::put('uploads/posts/cover_image', $data['cover_image']);
+            $project->cover_image = $cover_image_path;
+        }
 
         /* save inside database */
         $project->save();
