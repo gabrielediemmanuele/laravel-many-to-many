@@ -53,6 +53,24 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                 </div>
                 @enderror
             </div>
+            
+            {{--* per caricare l'immagine --}} 
+            <div class="col-12 mb-4">
+                <div class="row">
+                    <div class="col-8"> 
+                        <label for="cover_image" class="form-label">Cover Image</label>
+                        <input type="file" name="cover_image" id="cover_image" class="form-control @error('cover_image') is-invalid @enderror" value="{{ old('cover_image') }}">
+                        @error('cover_image')
+                            <div class="invalid-feedback">
+                                {{ $message}}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="col-4">
+                        <img src="" class="img-fluid" id="cover_image_preview">
+                    </div>
+                </div>
+            </div>
 
             <div class="col-4">
                 <label for="date" class="form-label">Date</label>
