@@ -15,11 +15,14 @@
             + Edit Comic
         </a> --}}
     <div class="card mt-3" style="width: 20rem;">
+        {{-- per l'immagine nella show.. --}}
+        <img src="{{ asset('/storage/' . $project->cover_image) }}" class="card-img-top img-fluid" alt="{{ $project->title }}">
         <div class="card-header">
         <div><strong>ID: {{ $project->id}} </strong></div>
         <div><strong>Title: {{ $project->title}}</strong></div>
         </div>
         <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Author: </strong>{{$project->author}}</li>
             <li class="list-group-item"><strong>Author: </strong>{{$project->author}}</li>
             <li class="list-group-item"><strong>Date: </strong>{{$project->date}}</li>
             <li class="list-group-item"><strong>Slug: </strong>{{$project->slug}}</li>
