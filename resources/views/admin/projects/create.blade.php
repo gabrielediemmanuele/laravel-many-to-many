@@ -157,3 +157,21 @@
     })
 </script>
 @endsection
+
+@section('scripts')
+<script type='text/javascript'>
+    /*  prendo l'id della stringa che contiene l'immagine*/
+    const inputFileElement = document.getElementById('cover_image');
+    /* mi aggancio all'id che conterrà la preview */
+    const coverImagePreview = document.getElementById('cover_image_preview');
+    /* se la preview non ha src (vuoto) lo sostituisco con un placeholder */
+    if (!coverImagePreview.getAttribute('src')) {
+        coverImagePreview.src = "https://placehold.co/400";
+    }
+    /* al cambio di immagine costruisco anche l'url per la preview  */
+    inputFileElement.addEventListener('change', function() {
+        const [file] = this.files;
+        coverImagePreview.src = URL.createObjectURL(file);
+    })
+</script>
+@endsection
