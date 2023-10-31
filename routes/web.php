@@ -29,6 +29,8 @@ Route::middleware(['auth', 'verified'])
     Route::get('/', [AdminPageController::class, 'index'])->name('home');
 
     Route::resource('projects', ProjectController::class);
+
+    /* Route::delete('/projects/{project}/delete-image', [ProjectController::class, 'deleteImage'])->name('projects.delete-image'); */
   });
 
 require __DIR__ . '/auth.php';

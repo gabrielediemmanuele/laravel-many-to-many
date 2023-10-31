@@ -17,7 +17,8 @@ class Project extends Model
         'link',
         'type_id',
         'tech_name',
-        'description'
+        'description',
+        'cover_image'
     ];
 
     /* 
