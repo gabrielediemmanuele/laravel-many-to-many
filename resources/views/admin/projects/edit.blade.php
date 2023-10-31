@@ -71,13 +71,18 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                     </div>
                 </div>
             </div>
-
-            @if ($project->cover_image)
+            
+           {{--  @if ($project->cover_image)
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger delete-image-button">
                     <i class="fa-solid fa-trash" id="delete-image-button"></i>
                     <span class="visually-hidden">delete image</span>
                 </span>
             @endif
+
+            <form action="{{ route('admin.projects.delete-image', $post) }}" method="POST" id="delete-image-form">
+            @method('DELETE')
+            @csrf
+            </form> --}}
 
             <div class="col-4">
                 <label for="date" class="form-label">Date</label>
@@ -190,7 +195,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
             coverImagePreview.src = URL.createObjectURL(file);
         })
     </script>
-
+{{-- 
     @if ($project->cover_image)
         <script>
             const deleteImageButton = document.getElementById('delete-image-button');
@@ -200,5 +205,5 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                 deleteImageForm.submit();
             })
         </script>
-    @endif
+    @endif --}}
 @endsection
