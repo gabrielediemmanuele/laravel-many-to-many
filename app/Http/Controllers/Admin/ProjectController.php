@@ -10,9 +10,13 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Arr;
 
+use Illuminate\Support\Facades\Storage;
+
 use App\Models\Project;
 use App\Models\Type;
 use App\Models\Technology;
+
+
 
 class ProjectController extends Controller
 {
@@ -63,6 +67,11 @@ class ProjectController extends Controller
 
         /* fill with form information */
         $project->fill($data);
+
+        if ($request->hasFile('cover_image')) {
+            $cover_image_path = Storage::put('uploads/posts/cover_image', $data['cover_image']);
+            $project->cover_image = $cover_image_path;
+        }
 
         /* save inside database */
         $project->save();
@@ -122,6 +131,14 @@ class ProjectController extends Controller
         $data = $this->validation($request->all());
         /* $this->validation($data); */
 
+        if ($request->hasFile('cover_image')) {
+            if ($project->cover_image) {
+                Storage::delete($project->cover_image);
+            }
+            $cover_image_path = Storage::put('uploads/posts/cover_image', $data['cover_image']);
+            $project->cover_image = $cover_image_path;
+        }
+
         $project->update($data);
 
         if (Arr::exists($data, "technologies"))
@@ -162,6 +179,7 @@ class ProjectController extends Controller
                 'type_id' => 'required',
                 'technologies' => 'nullable|exists:technologies,id',
                 'link' => 'required|string',
+                'cover_image' => 'nullable|image|max:1024',
                 'date' => 'required|string|max:50',
                 'description' => 'required',
             ],
@@ -183,6 +201,9 @@ class ProjectController extends Controller
 
                 'link.required' => 'The link is binding!',
                 'link.string' => 'link need to be a string!',
+
+                'cover_image.image' => 'Il file caricato deve essere un\'immagine(jpg, jpeg, png, svg, ecc).',
+                'cover_image.max' => 'Il file non può superare i 1024 KB',
 
                 'date.required' => 'The date is binding!',
                 'date.string' => 'date need to be a string!',
