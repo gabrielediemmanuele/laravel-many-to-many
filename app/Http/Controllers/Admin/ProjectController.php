@@ -69,7 +69,7 @@ class ProjectController extends Controller
         $project->fill($data);
 
         if ($request->hasFile('cover_image')) {
-            $cover_image_path = Storage::put('uploads/posts/cover_image', $data['cover_image']);
+            $cover_image_path = Storage::put('uploads/projects/cover_image', $data['cover_image']);
             $project->cover_image = $cover_image_path;
         }
 
@@ -135,7 +135,7 @@ class ProjectController extends Controller
             if ($project->cover_image) {
                 Storage::delete($project->cover_image);
             }
-            $cover_image_path = Storage::put('uploads/posts/cover_image', $data['cover_image']);
+            $cover_image_path = Storage::put('uploads/projects/cover_image', $data['cover_image']);
             $project->cover_image = $cover_image_path;
         }
 

@@ -17,7 +17,7 @@
     <div class="card mt-3" style="width: 20rem;">
         {{-- per l'immagine nella show.. --}}
         <img src="{{ asset('/storage/' . $project->cover_image) }}" class="card-img-top" alt="">
-            <div class="card-header">
+            <div class="card-body">
                 <div><strong>ID: {{ $project->id}} </strong></div>
                 <div><strong>Title: {{ $project->title}}</strong></div>
             </div>
