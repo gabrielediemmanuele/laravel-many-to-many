@@ -27,7 +27,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
             </div>
         @endif
         {{--! form con metodo post che si collega alla funzione store di comicsController --}}
-        <form class="row g-3" action="{{ route('admin.projects.update', $project) }}" method="POST" >
+        <form class="row g-3" action="{{ route('admin.projects.update', $project) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH') 
             {{-- for visualize correct the form use @csrf protect from fake dates --}}

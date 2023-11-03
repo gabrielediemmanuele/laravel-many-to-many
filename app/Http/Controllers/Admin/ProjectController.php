@@ -130,16 +130,19 @@ class ProjectController extends Controller
         /* validation call */
         $data = $this->validation($request->all());
         /* $this->validation($data); */
+        $project->update($data);
 
         if ($request->hasFile('cover_image')) {
+
             if ($project->cover_image) {
                 Storage::delete($project->cover_image);
             }
+
             $cover_image_path = Storage::put('uploads/projects/cover_image', $data['cover_image']);
             $project->cover_image = $cover_image_path;
-        }
 
-        $project->update($data);
+            $project->save();
+        }
 
         if (Arr::exists($data, "technologies"))
             $project->technologies()->sync($data["technologies"]);
