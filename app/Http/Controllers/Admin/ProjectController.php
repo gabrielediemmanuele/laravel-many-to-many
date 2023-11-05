@@ -160,7 +160,7 @@ class ProjectController extends Controller
      * @param  int  $id
      * * @return \Illuminate\Http\Response
      */
-    /* destroy  */
+    /* destroy  **/
     public function destroy(Project $project)
     {
         $project->technologies()->detach();
